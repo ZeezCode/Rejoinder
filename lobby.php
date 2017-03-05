@@ -30,11 +30,10 @@
     echo $app->getPageHead($_GET['id'] . "'s Lobby");
     include 'components/header.php';
 
-    /*if ($_SESSION['user']['name'] == $_GET['id']) { //temporary comment
+    if ($_SESSION['user']['name'] == $_GET['id']) { //temporary comment
         include 'components/lobby_streamer_pov.php';
     } else {
         include 'components/lobby_viewer_pov.php';
-    }*/
-    include 'components/lobby_viewer_pov.php';
+    }
 
     include 'components/footer.html';
