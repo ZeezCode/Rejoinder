@@ -51,8 +51,12 @@ class App {
     }
 
     function userLoggedIn($displayName) {
+        $token = $this->getRandomString(32);
+        while ($this->getUserFromToken($token) != null) {
+            $token = $this->getRandomString(32);
+        }
         $updateUserSQL = sprintf("UPDATE users SET login_token = '%s', last_seen = %d, last_ip = '%s' WHERE display_name = '%s';",
-            mysqli_real_escape_string($this->dbconnect, $this->getRandomString(32)),
+            mysqli_real_escape_string($this->dbconnect, $token),
             mysqli_real_escape_string($this->dbconnect, time()),
             mysqli_real_escape_string($this->dbconnect, $_SERVER['REMOTE_ADDR']),
             mysqli_real_escape_string($this->dbconnect, $displayName));
