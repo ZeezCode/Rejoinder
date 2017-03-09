@@ -3,19 +3,44 @@
         die(0);
     }
 ?>
+<span id="lobby_title"><?php echo $_GET['id']; ?></span>
 <div id="question_box">
     <div id="question_box_control">
 
     </div>
     <div id="question_box_list">
-        <div class="question">
-            <span class="sender_name">ZeePro90:</span><span class="question_timestamp">3/04/2017</span><br />
-            <span class="question_text">Who am I</span>
-        </div>
-
-        <div class="question">
-            <span class="sender_name">ZeePro90:</span><span class="question_timestamp">3/04/2017</span><br />
-            <span class="question_text">Who are you</span>
-        </div>
     </div>
 </div>
+
+<script>
+    var lastQuestion = 0;
+    function getQuestions(lastQuestion, lid, count, first) {
+        $.ajax({
+            type: "GET",
+            url: "actions/get_message.php",
+            data: {lastQuestion:lastQuestion, lid:lid, count:count, first:first},
+            dataType: 'json',
+            success: function(data) {
+                data.forEach(function(obj) {
+                    var newQuestion = "<div class=\"question\">"
+                        + "<span class=\"sender_name\">" + obj['user'] + ":</span><span class=\"question_timestamp\">" + obj['timestamp'] + "</span><br />"
+                        + "<span class=\"question_text\">" + obj['message'] + "</span>";
+                    $("#question_box_list").prepend(newQuestion);
+                    if (+obj['mid'] > +lastQuestion) {
+                        lastQuestion = obj['mid'];
+                    }
+                });
+                startQuestionRequestTimer(lastQuestion);
+            }
+        });
+    }
+
+    function startQuestionRequestTimer(lastQuestion) {
+        setTimeout(function() {
+            console.log("requesting...");
+            getQuestions(lastQuestion, $('#lobby_title').text(), 5, "false");
+        }, 10 * (1000)); //10 seconds
+    }
+
+    getQuestions(lastQuestion, $('#lobby_title').text(), 5, "true");
+</script>

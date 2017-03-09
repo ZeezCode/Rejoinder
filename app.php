@@ -102,6 +102,17 @@ class App {
         return $userInfo;
     }
 
+    function getUserFromUID($uid) {
+        $userInfo = null;
+        $getUserSQL = sprintf("SELECT * FROM users WHERE uid = %d;",
+            mysqli_real_escape_string($this->dbconnect, $uid));
+        $getUserQuery = mysqli_query($this->dbconnect, $getUserSQL);
+        if (mysqli_num_rows($getUserQuery) != 0) {
+            $userInfo = mysqli_fetch_assoc($getUserQuery);
+        }
+        return $userInfo;
+    }
+
     function submitMessage($lobby, $token, $message) {
         $user = $this->getUserFromToken($token);
         $createMessageSQL = sprintf("INSERT INTO messages VALUES (%d, %d, '%s', '%s', %d, '%s');",
