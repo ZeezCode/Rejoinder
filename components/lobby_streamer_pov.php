@@ -3,7 +3,7 @@
         die(0);
     }
 ?>
-<span id="lobby_title"><?php echo $_GET['id']; ?></span>
+<span id="lobby_title" style="display: none;"><?php echo $_GET['id']; ?></span>
 <div id="question_box">
     <div id="question_box_control">
 
@@ -25,7 +25,10 @@
                     var newQuestion = "<div class=\"question\">"
                         + "<span class=\"sender_name\">" + obj['user'] + ":</span><span class=\"question_timestamp\">" + obj['timestamp'] + "</span><br />"
                         + "<span class=\"question_text\">" + obj['message'] + "</span>";
-                    $("#question_box_list").prepend(newQuestion);
+                    $("#question_box_list").prepend($(newQuestion).animate({
+                        backgroundColor: '#6441A5',
+                        color: "#FFFFFF",
+                    }, 1000));
                     if (+obj['mid'] > +lastQuestion) {
                         lastQuestion = obj['mid'];
                     }
