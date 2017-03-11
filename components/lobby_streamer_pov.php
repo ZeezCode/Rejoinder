@@ -44,6 +44,5 @@
             getQuestions(lastQuestion, $('#lobby_title').text(), 5, "false");
         }, 10 * (1000)); //10 seconds
     }
-
     getQuestions(lastQuestion, $('#lobby_title').text(), 5, "true");
 </script>
