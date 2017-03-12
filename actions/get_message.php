@@ -20,8 +20,9 @@
             }
 
             if (is_numeric($_GET['lastQuestion'])) {
-                $getMessagesSQL = sprintf("SELECT * FROM messages WHERE mid > %d ORDER BY mid ASC LIMIT %d;",
+                $getMessagesSQL = sprintf("SELECT * FROM messages WHERE mid > %d AND lid = '%s' ORDER BY mid ASC LIMIT %d;",
                     mysqli_real_escape_string($dbconnect, $_GET['lastQuestion']),
+                    mysqli_real_escape_string($dbconnect, $_GET['lid']),
                     mysqli_real_escape_string($dbconnect, $_GET['count']));
                 $getMessagesQuery = mysqli_query($dbconnect, $getMessagesSQL);
                 $result = array();
