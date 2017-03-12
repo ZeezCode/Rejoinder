@@ -13,7 +13,21 @@
 </div>
 
 <script>
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);
+        var hour = date.getHours(), minute = date.getMinutes(), period = "AM";
+        if (hour > 12) {
+            hour = date.getHours() - 12;
+            period = "PM";
+        }
+        if (minute < 10) {
+            minute = "0" + date.getMinutes();
+        }
+        return (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear()) + " - " + (hour) + ":" + (minute) + " " + period;
+    }
+
     var lastQuestion = 0;
+
     function getQuestions(lastQuestion, lid, count, first) {
         $.ajax({
             type: "GET",
@@ -23,7 +37,7 @@
             success: function(data) {
                 data.forEach(function(obj) {
                     var newQuestion = "<div class=\"question\">"
-                        + "<span class=\"sender_name\">" + obj['user'] + ":</span><span class=\"question_timestamp\">" + obj['timestamp'] + "</span><br />"
+                        + "<span class=\"sender_name\">" + obj['user'] + ":</span><span class=\"question_timestamp\">" + timestampToTime(obj['timestamp']) + "</span><br />"
                         + "<span class=\"question_text\">" + obj['message'] + "</span>";
                     $("#question_box_list").prepend($(newQuestion).animate({
                         backgroundColor: '#6441A5',
