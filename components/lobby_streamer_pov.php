@@ -23,7 +23,7 @@
         if (minute < 10) {
             minute = "0" + date.getMinutes();
         }
-        return (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear()) + " - " + (hour) + ":" + (minute) + " " + period;
+        return hour + ":" + minute + " " + period;
     }
 
     var lastQuestion = 0;
