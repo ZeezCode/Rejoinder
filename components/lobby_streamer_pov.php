@@ -26,8 +26,6 @@
         return hour + ":" + minute + " " + period;
     }
 
-    var lastQuestion = 0;
-
     function getQuestions(lastQuestion, lid, count, first) {
         $.ajax({
             type: "GET",
@@ -58,5 +56,16 @@
             getQuestions(lastQuestion, $('#lobby_title').text(), 5, "false");
         }, 10 * (1000)); //10 seconds
     }
-    getQuestions(lastQuestion, $('#lobby_title').text(), 5, "true");
+
+    $.ajax({
+        type: "GET",
+        url: "actions/get_starting_message.php",
+        data: {id:$('#lobby_title').text()},
+        dataType: 'text',
+        success: function(data) {
+            if (data!="-1") {
+                startQuestionRequestTimer(data);
+            }
+        }
+    });
 </script>
