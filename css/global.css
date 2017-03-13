@@ -109,6 +109,7 @@ hr {
 .question {
     border: 2px solid #6441A5;
     background: #6441A5;
+    position: relative;
     margin: 10px auto;
     height: 35px;
     width: 90%;
@@ -125,4 +126,10 @@ hr {
 .question_timestamp {
     color: #FFF;
     float: right;
+}
+
+.remove_button {
+    color: #FF0000;
+    float: right;
+    cursor: pointer;
 }
