@@ -71,6 +71,8 @@
         success: function(data) {
             if (data!="-1") {
                 startQuestionRequestTimer(data);
+            } else {
+                $("#question_box_list").prepend("<span style=\"color: red;\">An error occurred while attempting to fetch last question ID. Please try again later.</span>");
             }
         }
     });
