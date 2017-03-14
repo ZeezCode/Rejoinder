@@ -36,7 +36,7 @@
                 data.forEach(function(obj) {
                     var newQuestion = "<div class=\"question\">"
                         + "<span class=\"sender_name\">" + obj['user'] + ":</span><span class=\"question_timestamp\">" + timestampToTime(obj['timestamp']) + "</span><br />"
-                        + "<span class=\"question_text\">" + obj['message'] + "</span>";
+                        + "<span class=\"question_text\">" + obj['message'] + "</span><span onclick=\"removeQuestion(this)\" class=\"remove_button\">X</span>";
                     $("#question_box_list").prepend($(newQuestion).animate({
                         backgroundColor: '#6441A5',
                         color: "#FFFFFF",
@@ -55,6 +55,12 @@
             console.log("requesting...");
             getQuestions(lastQuestion, $('#lobby_title').text(), 5, "false");
         }, 10 * (1000)); //10 seconds
+    }
+
+    function removeQuestion(button) {
+        $(button).parent().fadeOut(500, function() {
+            $(this).remove();
+        });
     }
 
     $.ajax({

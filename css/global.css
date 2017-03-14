@@ -126,3 +126,9 @@ hr {
     color: #FFF;
     float: right;
 }
+
+.remove_button {
+    color: #FF0000;
+    float: right;
+    cursor: pointer;
+}
