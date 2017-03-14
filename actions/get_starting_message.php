@@ -13,7 +13,7 @@
                 mysqli_real_escape_string($dbconnect, time()));
             $getLatestMessageQuery = mysqli_query($dbconnect, $getLatestMessageSQL);
             if (mysqli_num_rows($getLatestMessageQuery) == 0) {
-                echo "-1";
+                echo "0";
             } else {
                 echo mysqli_fetch_assoc($getLatestMessageQuery)['mid'];
             }
