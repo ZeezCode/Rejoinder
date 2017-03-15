@@ -69,11 +69,15 @@ class App {
         mysqli_query($this->dbconnect, $updateUserSQL);
     }
 
-    function userHasName($name) {
+    function getUserInfoFromName($name) {
+        $userInfo = null;
         $getUserSQL = sprintf("SELECT * FROM users WHERE name = '%s';",
             mysqli_real_escape_string($this->dbconnect, $name));
         $getUserQuery = mysqli_query($this->dbconnect, $getUserSQL);
-        return (mysqli_num_rows($getUserQuery) != 0);
+        if (mysqli_num_rows($getUserQuery) != 0) {
+            $userInfo = mysqli_fetch_assoc($getUserQuery);
+        }
+        return $userInfo;
     }
 
     function getPageHead($title) {
@@ -88,6 +92,7 @@ class App {
                 <link href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\" rel=\"stylesheet\" integrity=\"sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN\" crossorigin=\"anonymous\">
                 <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js\"></script>
                 <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.min.js\" integrity=\"sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=\" crossorigin=\"anonymous\"></script>
+                <script src=\"notify.min.js\"></script>
             </head>
             <body>";
     }
@@ -127,5 +132,9 @@ class App {
         if (!$result) {
             return mysqli_error($this->dbconnect);
         } else return  "";
+    }
+
+    function userHasQuestionsDisabled($lobby) {
+        return ($this->getUserInfoFromName($lobby)['questions_disabled'] == 1);
     }
 }

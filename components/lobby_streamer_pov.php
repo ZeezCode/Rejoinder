@@ -6,7 +6,22 @@
 <span id="lobby_title" style="display: none;"><?php echo $_GET['id']; ?></span>
 <div id="question_box">
     <div id="question_box_control">
-
+        <?php
+            $takingQuestions = !$app->userHasQuestionsDisabled($_SESSION['user']['name']);
+        ?>
+        <input type="checkbox" id="taking_question" style="-webkit-appearance: none; background-color: <?php echo ($takingQuestions ? "#8CFE72" : "#FF0000"); ?>;" <?php echo ($takingQuestions ? "checked" : ""); ?>>
+        <select id="select_count">
+            <option value="1">1 Question per Refresh</option>
+            <option value="2">2 Questions per Refresh</option>
+            <option value="3">3 Questions per Refresh</option>
+            <option value="4">4 Questions per Refresh</option>
+            <option value="5" selected>5 Questions per Refresh</option>
+            <option value="6">6 Questions per Refresh</option>
+            <option value="7">7 Questions per Refresh</option>
+            <option value="8">8 Questions per Refresh</option>
+            <option value="9">9 Questions per Refresh</option>
+            <option value="10">10 Questions per Refresh</option>
+        </select>
     </div>
     <div id="question_box_list">
     </div>
@@ -62,6 +77,14 @@
             $(this).remove();
         });
     }
+
+    $(':checkbox').change(function() {
+        if (this.checked)
+            $(this).css('background-color', '#8CFE72');
+        else
+            $(this).css('background-color', '#FF0000');
+        $.notify("You are " + (this.checked ? "now" : "no longer") + " accepting questions!", "info");
+    });
 
     $.ajax({
         type: "GET",

@@ -22,7 +22,7 @@
 
     $app->updateUserActivity($_SESSION['user']['display_name']);
 
-    if (!$app->userHasName($_GET['id'])) { //User does not exist
+    if ($app->getUserInfoFromName($_GET['id']) == null) { //User does not exist
         header('Location: error.php?e=2');
         die(0);
     }

@@ -15,8 +15,8 @@
             }
 
             $app = new App($dbconnect);
-
-            if ($app->getUserFromToken($_GET['token']) != null && $app->userHasName($_GET['lobby'])) {
+            $streamerInfo = $app->getUserInfoFromName($_GET['lobby']);
+            if ($app->getUserFromToken($_GET['token']) != null && $streamerInfo != null && !$streamerInfo['questions_disabled']) {
                 $app->submitMessage($_GET['lobby'], $token, $_GET['message']);
                 echo "Successfully sent message";
             } else {

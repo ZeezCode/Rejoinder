@@ -8,7 +8,7 @@
             die(0);
         }
         $app = new App($dbconnect);
-        if ($app->userHasName($_GET['id'])) {
+        if ($app->getUserInfoFromName($_GET['id']) != null) {
             $getLatestMessageSQL = sprintf("SELECT mid FROM messages WHERE timestamp < %d ORDER BY mid DESC LIMIT 1;",
                 mysqli_real_escape_string($dbconnect, time()));
             $getLatestMessageQuery = mysqli_query($dbconnect, $getLatestMessageSQL);
@@ -17,5 +17,7 @@
             } else {
                 echo mysqli_fetch_assoc($getLatestMessageQuery)['mid'];
             }
-        } else { echo "-1"; }
+        } else {
+            echo "-1";
+        }
     }
