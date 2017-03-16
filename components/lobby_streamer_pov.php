@@ -4,6 +4,7 @@
     }
 ?>
 <span id="lobby_title" style="display: none;"><?php echo $_GET['id']; ?></span>
+<span id="token" style="display: none;"><?php echo $_SESSION['user']['login_token']; ?></span>
 <div id="question_box">
     <div id="question_box_control">
         <?php
@@ -68,7 +69,7 @@
     function startQuestionRequestTimer(lastQuestion) {
         setTimeout(function() {
             console.log("requesting...");
-            getQuestions(lastQuestion, $('#lobby_title').text(), 5, "false");
+            getQuestions(lastQuestion, $('#lobby_title').text(), $("#select_count").val(), "false");
         }, 10 * (1000)); //10 seconds
     }
 
@@ -79,11 +80,27 @@
     }
 
     $(':checkbox').change(function() {
-        if (this.checked)
-            $(this).css('background-color', '#8CFE72');
-        else
-            $(this).css('background-color', '#FF0000');
-        $.notify("You are " + (this.checked ? "now" : "no longer") + " accepting questions!", "info");
+        $.ajax({
+           type: "GET",
+           url: "actions/toggle_question_status.php",
+           data: {token:$("#token").text()},
+           dataType: 'text',
+           success: function(data) {
+               console.log("Toggled: " + data);
+               if (data=="0") {
+                   var checkbox = $("#taking_question");
+                   if (checkbox.is(':checked')) {
+                       $(checkbox).css('background-color', '#8CFE72');
+                   }
+                   else {
+                       $(checkbox).css('background-color', '#FF0000');
+                   }
+                   $.notify("You are " + (checkbox.is(':checked') ? "now" : "no longer") + " accepting questions!", "info");
+               } else {
+                   $.notify("An error occurred while attempting to toggle lobby status!", "error");
+               }
+           }
+        });
     });
 
     $.ajax({

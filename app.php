@@ -137,4 +137,11 @@ class App {
     function userHasQuestionsDisabled($lobby) {
         return ($this->getUserInfoFromName($lobby)['questions_disabled'] == 1);
     }
+
+    function setUserQuestionsDisabled($token, $disabled) {
+        $updateUserSQL = sprintf("UPDATE users SET questions_disabled = %d WHERE login_token = '%s';",
+            mysqli_real_escape_string($this->dbconnect, ($disabled ? 1 : 0)),
+            mysqli_real_escape_string($this->dbconnect, $token));
+        mysqli_query($this->dbconnect, $updateUserSQL);
+    }
 }
