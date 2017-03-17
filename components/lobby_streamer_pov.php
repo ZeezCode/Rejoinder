@@ -87,8 +87,8 @@
            dataType: 'text',
            success: function(data) {
                console.log("Toggled: " + data);
+               var checkbox = $("#taking_question");
                if (data=="0") {
-                   var checkbox = $("#taking_question");
                    if (checkbox.is(':checked')) {
                        $(checkbox).css('background-color', '#8CFE72');
                    }
@@ -97,6 +97,7 @@
                    }
                    $.notify("You are " + (checkbox.is(':checked') ? "now" : "no longer") + " accepting questions!", "info");
                } else {
+                   checkbox.prop('checked', !checkbox.is(':checked'));
                    $.notify("An error occurred while attempting to toggle lobby status!", "error");
                }
            }
