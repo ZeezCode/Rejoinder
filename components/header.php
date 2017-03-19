@@ -1,8 +1,11 @@
 <?php
+    $myLobbyURL = "<a href='lobby.php?id=" . $_SESSION['user']['name'] . "'>My Lobby</a> - ";
+    $logInOrOut = "<a href='reset_session.php'>Log Out</a>";
     if (!isset($_SESSION) || !isset($_SESSION['user'])) {
-        die(0);
+        $myLobbyURL = "";
+        $logInOrOut = "<a href='index.php'>Log In</a>";
     }
 ?>
 <div id="header">
-    <span id="header_links"><a href="lobby.php?id=<?php echo $_SESSION['user']['name']; ?>"> My Lobby</a> - <a href="reset_session.php">Log Out</a></span>
+    <span id="header_links"><?php echo $myLobbyURL . $logInOrOut; ?></span>
 </div>
