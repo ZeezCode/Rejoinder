@@ -179,9 +179,21 @@ hr {
     padding: 8px;
 }
 
-#stats_table tr:nth-child(even) {background-color: #d2d2d2 !important;}
+#stats_table tr:nth-child(even) {background-color: #d2d2d2;}
 
 #stats_table th {
     background-color: #6441A5;
     color: white;
+}
+
+.secondary_header_wrapper {
+    text-align: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.secondary_header_text {
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    color: #6441A5;
 }

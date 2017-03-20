@@ -3,6 +3,9 @@
         die(0);
     }
 ?>
+<div class="secondary_header_wrapper">
+    <span class="secondary_header_text">Current Lobby: <?php echo $_GET['id']; ?></span>
+</div>
 <form action="javascript:;" onsubmit="sendMessage(this)">
     <input type="hidden" name="lobby" value="<?php echo $_GET['id']; ?>">
     <input type="hidden" name="token" value="<?php echo $_SESSION['user']['login_token']; ?>">

@@ -5,6 +5,9 @@
 ?>
 <span id="lobby_title" style="display: none;"><?php echo $_GET['id']; ?></span>
 <span id="token" style="display: none;"><?php echo $_SESSION['user']['login_token']; ?></span>
+<div class="secondary_header_wrapper">
+    <span class="secondary_header_text">Join My Lobby At: http://WEBSITE.COM/lobby.php?id=<?php echo $_SESSION['user']['name']; ?></span>
+</div>
 <div id="question_box">
     <div id="question_box_control">
         <?php
