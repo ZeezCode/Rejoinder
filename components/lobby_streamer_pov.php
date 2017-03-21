@@ -13,7 +13,7 @@
         <?php
             $takingQuestions = !$app->userHasQuestionsDisabled($_SESSION['user']['name']);
         ?>
-        <input type="checkbox" id="taking_question" style="-webkit-appearance: none; background-color: <?php echo ($takingQuestions ? "#8CFE72" : "#FF0000"); ?>;" <?php echo ($takingQuestions ? "checked" : ""); ?>>
+        <input type="checkbox" id="taking_question" style="-webkit-appearance: none; background-color: <?php echo ($takingQuestions ? "#00ff00" : "#FF0000"); ?>;" <?php echo ($takingQuestions ? "checked" : ""); ?>>
         <select id="select_count">
             <option value="1">1 Question per Refresh</option>
             <option value="2">2 Questions per Refresh</option>
@@ -93,7 +93,7 @@
                var checkbox = $("#taking_question");
                if (data=="0") {
                    if (checkbox.is(':checked')) {
-                       $(checkbox).css('background-color', '#8CFE72');
+                       $(checkbox).css('background-color', '#00ff00');
                    }
                    else {
                        $(checkbox).css('background-color', '#FF0000');
