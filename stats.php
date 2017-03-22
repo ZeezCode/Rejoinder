@@ -17,6 +17,28 @@
     $getMsgCountQuery = mysqli_query($dbconnect, $getMsgCountSQL);
     $msgTotal = mysqli_fetch_assoc($getMsgCountQuery)['total_messages'];
 
+    $getUserCountInLastDaySQL = sprintf("SELECT COUNT(*) AS users_online FROM users WHERE UNIX_TIMESTAMP() - last_seen <= 86400;");
+    $getUserCountInLastDayQuery = mysqli_query($dbconnect, $getUserCountInLastDaySQL);
+    $userCount = mysqli_fetch_assoc($getUserCountInLastDayQuery)['users_online'];
+
+    $getTopPosterUIDSQL = sprintf("SELECT COUNT(*) AS num_of_questions, uid FROM messages GROUP BY uid ORDER BY num_of_questions DESC;");
+    $getTopPosterUIDQuery = mysqli_query($dbconnect, $getTopPosterUIDSQL);
+    $result = mysqli_fetch_assoc($getTopPosterUIDQuery);
+    $mostQuestionsCount = $result['num_of_questions'];
+    $mostQuestionsName = $app->getUserFromUID($result['uid'])['display_name'];
+    if (strlen($mostQuestionsName) > 8) {
+        $mostQuestionsName = substr($mostQuestionsName, 0, 5) . "...";
+    }
+
+    $getTopLobbySQL = sprintf("SELECT COUNT(*) AS num_of_questions_asked, lid FROM messages GROUP BY lid ORDER BY num_of_questions_asked DESC");
+    $getTopLobbyQuery = mysqli_query($dbconnect, $getTopLobbySQL);
+    $topLobbyInfo = mysqli_fetch_assoc($getTopLobbyQuery);
+    $topLobby = $app->getUserInfoFromName($topLobbyInfo['lid'])['display_name'];
+    $topLobbyQuestions = $topLobbyInfo['num_of_questions_asked'];
+    if (strlen($topLobby) > 8) {
+        $topLobby = substr($topLobby, 0, 5) . "...";
+    }
+
     echo $app->getPageHead("STATS | Rejoinder");
     include 'components/header.php';
 ?>
@@ -35,8 +57,16 @@
             <td><?php echo $msgTotal; ?></td>
         </tr>
         <tr>
-            <td>Example Statistic</td>
-            <td>23</td>
+            <td>Users Online in Past Day</td>
+            <td><?php echo $userCount; ?></td>
+        </tr>
+        <tr>
+            <td>User Submitted Most Questions</td>
+            <td><?php echo htmlentities($mostQuestionsName) . " (" . $mostQuestionsCount . ")"; ?></td>
+        </tr>
+        <tr>
+            <td>Lobby with Most Questions</td>
+            <td><?php echo htmlentities($topLobby) . " (" . $topLobbyQuestions . ")"; ?></td>
         </tr>
     </table>
 </div>
