@@ -32,7 +32,11 @@
             dataType: 'text',
             success: function(data) {
                 console.log(data);
-                $.notify("Your question was successfully submitted!", "info");
+                if (data.includes("Failed")) {
+                    $.notify("An error occurred while attempting to submit your question!", "error");
+                } else {
+                    $.notify("Your question was successfully submitted!", "info");
+                }
             }
         });
         form.typed_msg.value = "";
