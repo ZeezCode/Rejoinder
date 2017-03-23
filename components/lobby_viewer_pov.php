@@ -32,6 +32,7 @@
             dataType: 'text',
             success: function(data) {
                 console.log(data);
+                $.notify("Your question was successfully submitted!", "info");
             }
         });
         form.typed_msg.value = "";
