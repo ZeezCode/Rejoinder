@@ -5,14 +5,15 @@
             require '../app.php';
             $dbconnect = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
             if (mysqli_connect_errno()) {
-                //die(1);
-            }
-            $app = new App($dbconnect);
-            $user = $app->getUserFromToken($_GET['token']);
-            if ($user != null) {
-                $app->setUserQuestionsDisabled($_GET['token'], !$user['questions_disabled']);
-                echo "0";
-                die(0);
+                //die(0);
+            } else {
+                $app = new App($dbconnect);
+                $user = $app->getUserFromToken($_GET['token']);
+                if ($user != null) {
+                    $app->setUserQuestionsDisabled($_GET['token'], !$user['questions_disabled']);
+                    echo "0";
+                    die(0);
+                }
             }
         }
     }
