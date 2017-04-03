@@ -32,10 +32,10 @@
             dataType: 'text',
             success: function(data) {
                 console.log(data);
-                if (data.includes("Failed")) {
-                    $.notify("An error occurred while attempting to submit your question!", "error");
+                if (data.toLowerCase().includes("failed") || data.toLowerCase().includes("disabled")) {
+                    $.notify(data, "error");
                 } else {
-                    $.notify("Your question was successfully submitted!", "info");
+                    $.notify(data, "info");
                 }
             }
         });

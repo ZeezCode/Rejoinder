@@ -16,11 +16,16 @@
 
             $app = new App($dbconnect);
             $streamerInfo = $app->getUserInfoFromName($_GET['lobby']);
-            if ($app->getUserFromToken($_GET['token']) != null && $streamerInfo != null && !$streamerInfo['questions_disabled']) {
-                $app->submitMessage($_GET['lobby'], $token, $_GET['message']);
-                echo "Successfully sent message";
+            if ($app->getUserFromToken($_GET['token']) != null && $streamerInfo != null) {
+                if (!$streamerInfo['questions_disabled']) {
+                    $app->submitMessage($_GET['lobby'], $token, $_GET['message']);
+                    echo "Successfully sent message!";
+                }
+                else {
+                    echo "Streamer has question submission disabled!";
+                }
             } else {
-                echo "Failed to send message";
+                echo "Failed to send message!";
             }
         }
     }
