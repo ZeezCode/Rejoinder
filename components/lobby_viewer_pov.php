@@ -32,11 +32,7 @@
             dataType: 'text',
             success: function(data) {
                 console.log(data);
-                if (data.toLowerCase().includes("failed") || data.toLowerCase().includes("disabled")) {
-                    $.notify(data, "error");
-                } else {
-                    $.notify(data, "info");
-                }
+                $.notify(data, (data.toLowerCase().includes("failed") || data.toLowerCase().includes("disabled") ? "error" : "info"));
             }
         });
         form.typed_msg.value = "";
